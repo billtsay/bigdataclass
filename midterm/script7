@@ -1,0 +1,16 @@
+REGISTER '/home/cloudera/data/jyson-1.0.2/lib/jyson-1.0.2.jar'
+
+REGISTER '/home/cloudera/workspace/py_midterm/bin/converter.py' USING jython AS converter;
+
+
+revs = LOAD '/user/cloudera/data/yelp_academic_dataset_review.json' AS (r_line:CHARARRAY);
+r_csv = FOREACH revs GENERATE converter.reviewers(r_line);
+
+STORE r_csv INTO '/user/cloudera/reviewers.csv';
+
+
+usrs = LOAD '/user/cloudera/data/yelp_academic_dataset_user.json' AS (u_line:CHARARRAY);
+u_csv = FOREACH usrs GENERATE converter.users(u_line);
+
+STORE u_csv INTO '/user/cloudera/users.csv';
+

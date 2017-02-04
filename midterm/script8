@@ -1,0 +1,44 @@
+R = LOAD '/user/cloudera/reviewers.csv' USING PigStorage(',') AS (business_id:chararray, user_id:chararray, stars:int);
+U = LOAD '/user/cloudera/users.csv' USING PigStorage(',') AS (user_id:chararray, name:chararray, average_stars:float, review_count:int);
+
+G = GROUP U by (user_id, name);
+
+Z = FOREACH G GENERATE FLATTEN(group), SUM(U.review_count) AS reviews;
+
+K = RANK Z by reviews DESC;
+
+
+-- DUMP K;
+
+-- The below is for showing average stars of the top 10 reviewers.
+
+Top10 = LIMIT K 10;
+
+T = JOIN Top10 BY user_id, U BY user_id;
+
+
+D = FOREACH T GENERATE U::user_id AS user_id, U::name AS name, U::average_stars AS average_stars;
+
+
+X = JOIN R BY user_id, D BY user_id;
+
+
+E = FOREACH X GENERATE business_id, D::user_id AS user_id, D::name AS name, D::average_stars AS average_stars; 
+
+
+C = LOAD '/user/cloudera/categories.bag' USING PigStorage() AS b:{t:(business_id:chararray,category:chararray)};
+
+B = FOREACH C GENERATE FLATTEN(b);
+
+Y = JOIN B BY business_id, E BY business_id;
+
+J = FOREACH Y GENERATE category, E::user_id AS user_id, E::name AS name, E::average_stars AS average_stars; 
+
+W = GROUP J BY (category, user_id, name);
+
+A = FOREACH W GENERATE FLATTEN(group), FLATTEN(J.average_stars);
+
+AA = DISTINCT A;
+
+DUMP AA;
+

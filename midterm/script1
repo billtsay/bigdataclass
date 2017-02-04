@@ -1,0 +1,15 @@
+REGISTER '/home/cloudera/data/jyson-1.0.2/lib/jyson-1.0.2.jar'
+
+-- business_id, city, review_count, type, stars, longitude, latitude
+
+REGISTER '/home/cloudera/workspace/py_midterm/bin/converter.py' USING jython AS converter;
+
+
+biz = LOAD '/user/cloudera/data/yelp_academic_dataset_business.json' AS (line:CHARARRAY);
+
+csv = FOREACH biz GENERATE converter.business(line);
+
+STORE csv INTO '/user/cloudera/business.csv';
+
+
+

@@ -1,0 +1,13 @@
+R = LOAD '/user/cloudera/business.csv' USING PigStorage(',') AS (business_id:chararray, name:chararray, city:chararray, type:chararray, review_count:int, stars:float, longitude:float, latitude:float);
+
+F = FILTER R BY ((longitude>=-80.8376) AND (longitude<=-79.848) AND (latitude>=40.3687) AND (latitude<=40.5137));
+
+-- generate only the fields we need.
+G = FOREACH F GENERATE business_id, type, stars;
+
+C = GROUP G BY type;
+
+X = FOREACH C GENERATE group, ROUND(10f*AVG(G.stars))/10f AS stars;
+
+DUMP X;
+

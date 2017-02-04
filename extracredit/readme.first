@@ -1,0 +1,75 @@
+I use spark-1.6.1 for this project. Scala 2.10.x
+
+First of all, modify spark-1.6.1/conf/log4j.properties to ERROR level:
+
+log4j.rootCategory=ERROR, console
+
+so we won't see a lot of INFO logs.
+
+
+To run WordCount:
+
+./run.sh WordCount wc.txt
+
+...
+(through.",1)
+(larger,1)
+(Rick,1)
+(started.,1)
+(professional,1)
+(super,5)
+(operation,1)
+($1,1)
+(but,1)
+(traditional,2)
+(vice,4)
+(yourself.,1)
+(collected,1)
+(clear,1)
+(unlimited,1)
+(battery,1)
+(script.,1)
+(about,1)
+(But,1)
+(small,1)
+(corner,,1)
+(position,1)
+(let,1)
+(part,,1)
+...
+
+To run yelp business:
+
+./run.sh YelpBusiness yelp/yelp_academic_dataset_business.json yelp/yelp_academic_dataset_review.json
+
++--------------------+--------------------+----------+----------+--------------------+--------------+
+|         business_id|        BusinessName|StarRating|   MaxDate|              UserId|UserStarRating|
++--------------------+--------------------+----------+----------+--------------------+--------------+
+|sgZwUkKSpFQxE2v1h...|         Rustic Cafe|       3.5|2015-12-24|Ob-aUBLAA9JhhwC4V...|             4|
+|JzRmh5WBRaWTE3bKv...|    Elements Massage|       4.0|2015-12-24|UTVVPyT_2KNdfV-XD...|             5|
+|nPd0exvWNKyRq6u3h...|Beverly Hills Car...|       4.0|2015-12-24|VD4E91XNSP8_B5fit...|             4|
+|KFamFJYGsGMgKjhPa...|Daniel's Original...|       4.5|2015-12-24|WpgGkjiKt_n5hqXka...|             5|
+|gpUFY11DQvIc7dwXX...|       Daily Kitchen|       3.5|2015-12-24|up8DSVVRTHG_Iou3f...|             1|
+|DN4kjoM0K31HR230i...|        New Day Cafe|       3.5|2015-12-24|8i03SS7gJQZ6IUvbU...|             1|
+|bQiAU9rKpdixtFuX0...|Viet-Thai Noodle ...|       4.0|2015-12-24|Wlz20Pi9PpodjHX7z...|             2|
+|aB2w4XFUi2Djp4t-X...|          Nails R US|       3.5|2015-12-24|zUwgvFtwcK_4TStpI...|             1|
+|6HCFfg-1HKy6G5t4b...|               Tetsu|       4.0|2015-12-24|Kc-zLnuUr8FV5xJzA...|             5|
+|THmu2TKS10udylgZ4...|   Shawn's Pool Shop|       5.0|2015-12-24|Z1n04HunRAZPHzcq4...|             5|
+|204_6ZlNOdPEYzSzZ...|Golden Feet Refle...|       4.5|2015-12-24|4pFTtuJEd1dMItfwU...|             5|
+|kyNHcuvg7Rl1gzrPF...|    Rachel's Kitchen|       3.5|2015-12-24|x437CKNVhOR2jyzs3...|             5|
+|UZS8qFGAZGGHTqYLA...|       China Gourmet|       4.0|2015-12-24|rNIdxWXTWb1T_QumZ...|             5|
+|12ivXGvkBqVTpWlec...|  Rose Shack Florist|       4.0|2015-12-24|mcynISDioIPcKkO8W...|             1|
+|mbYRT-S8nNP_53fX5...|Gray Line Tours o...|       2.0|2015-12-24|375sTAsf_zvFN7ziD...|             1|
+|LT00Q44xHSFTs1wJP...|Scottsdale Beer C...|       4.0|2015-12-24|-9QoHV9qUJUDYLY47...|             5|
+|EmlgWjs1ZzZEpDjZC...|AMC Dine-in Theat...|       3.5|2015-12-24|_pc89S47Dk-yp1Vjr...|             5|
+|0i8RMtxA4U2NM_8TD...|         WinCo Foods|       4.0|2015-12-24|BS_nh8pIZQLpla7mp...|             4|
+|sGU0dlsT_zXBW1m_l...| Thai Taste Matthews|       4.0|2015-12-24|TtcGJQuYU3vZVenbu...|             5|
+|JLc1eEobABy4NriZo...|UFC GYM Green Valley|       4.0|2015-12-24|O4XAjranoY3N9G0pY...|             1|
++--------------------+--------------------+----------+----------+--------------------+--------------+
+only showing top 20 rows
+
+I do not have enough time to do assignment 3 and 4 as the file states.js is not a json file, but a javascript with json data. 
+I may need to use java to manipulate it a bit to get the data I need in json.
+
+ 
+

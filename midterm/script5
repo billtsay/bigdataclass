@@ -1,0 +1,19 @@
+R = LOAD '/user/cloudera/business.csv' USING PigStorage(',') AS (business_id:chararray, name:chararray, city:chararray, type:chararray, review_count:int, stars:float, longitude:float, latitude:float);
+C = LOAD '/user/cloudera/categories.bag' USING PigStorage() AS b:{t:(business_id:chararray,category:chararray)};
+
+-- Flattening the bag structure into list.
+B = FOREACH C GENERATE FLATTEN(b);
+
+X = JOIN R BY business_id, B BY business_id;
+
+-- Only generate the fields we need for ranking.
+Y = FOREACH X GENERATE category AS category, city AS city, stars AS stars;
+
+G = GROUP Y by (category, city);
+
+-- Round the average stars.
+Z = FOREACH G GENERATE FLATTEN(group), AVG(Y.stars)*10f AS stars;
+
+K = rank Z by stars DESC;
+
+DUMP K;

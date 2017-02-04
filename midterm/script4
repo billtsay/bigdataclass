@@ -1,0 +1,13 @@
+R = LOAD '/user/cloudera/business.csv' USING PigStorage(',') AS (business_id:chararray, name:chararray, city:chararray, type:chararray, review_count:int, stars:float, longitude:float, latitude:float);
+
+F = FILTER R BY type=='business';
+
+-- generate only the fields we need.
+G = FOREACH F GENERATE business_id, city, review_count;
+
+C = GROUP G BY city;
+
+X = FOREACH C GENERATE group, SUM(G.review_count);
+
+DUMP X;
+
